@@ -242,11 +242,6 @@ class MakePOT {
 
 		$excludes = array( 'wp-admin/.*', 'wp-content/themes/.*', 'wp-includes/class-pop3\.php' );
 
-		// Exclude Akismet all together for 3.9+.
-		if ( file_exists( "$dir/wp-admin/css/about.css" ) ) {
-			$excludes[] = 'wp-content/plugins/akismet/.*';
-		}
-
 		return $this->wp_generic( $dir, array(
 			'project' => 'wp-frontend', 'output' => $output,
 			'includes' => array(),
@@ -279,13 +274,6 @@ class MakePOT {
 		}
 
 		$potextmeta = new PotExtMeta;
-
-		if ( ! file_exists( "$dir/wp-admin/css/about.css" ) ) { // < 3.9
-			$result = $potextmeta->append( "$dir/wp-content/plugins/akismet/akismet.php", $output );
-			if ( ! $result ) {
-				return false;
-			}
-		}
 
 		$result = $potextmeta->append( "$dir/wp-content/plugins/hello.php", $output );
 		if ( ! $result ) {
